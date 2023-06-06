@@ -1,4 +1,4 @@
-:root {
+/* :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
@@ -65,5 +65,44 @@ button:focus-visible {
   }
   button {
     background-color: #f9f9f9;
+  }
+} */
+
+/* * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Inter', sans-serif;
+} */
+
+/* body {
+  background-color: #191919;
+  color: #f2f2f2;
+  min-height: 100vh;
+} */
+
+/* button {
+  cursor: pointer;
+} */
+
+.grid {
+  grid-template-columns: repeat(4, 1fr);
+}
+
+@media (width < 992px) {
+  .grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (width < 768px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (width < 576px) {
+  .grid {
+    grid-template-columns: repeat(1, 1fr);
   }
 }

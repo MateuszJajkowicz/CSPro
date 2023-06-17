@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 const MapTile = ({ name }: { name: string }) => {
   return (
     <>
-      <Link to={`/smokes/${name}`}>
+      <Link to={`/nades/${name}`}>
         <figure>
           <img
             src={`/images/${name}.jpg`}

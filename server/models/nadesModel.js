@@ -25,6 +25,48 @@ const reviewSchema = mongoose.Schema(
   }
 );
 
+const imageSchema = mongoose.Schema({
+  id: {
+    type: String,
+    required: true,
+  },
+  collection: {
+    type: String,
+    required: true,
+  },
+  url: {
+    type: String,
+    required: true,
+  },
+});
+
+const gfySchema = mongoose.Schema({
+  smallVideoUrl: {
+    type: String,
+    required: true,
+  },
+  avgColor: {
+    type: String,
+    required: true,
+  },
+  gfyId: {
+    type: String,
+    required: true,
+  },
+  largeVideoWebm: {
+    type: String,
+    required: true,
+  },
+  duration: {
+    type: String,
+    required: true,
+  },
+  largeVideoUrl: {
+    type: String,
+    required: true,
+  },
+});
+
 const nadeSchema = new mongoose.Schema(
   {
     user: {
@@ -59,18 +101,22 @@ const nadeSchema = new mongoose.Schema(
       },
       required: true,
     },
-    name: {
+    endPosition: {
       type: String,
       required: true,
     },
-    from: {
+    startPosition: {
       type: String,
       required: true,
     },
-    image: {
+    images: {
       type: [String],
-      required: true,
+      required: false,
     },
+    imageLineup: imageSchema,
+    imageLineupThumb: imageSchema,
+    imageLineupThumbUrl: String,
+    imageMain: imageSchema,
     video: {
       type: String,
       required: false,
@@ -78,15 +124,15 @@ const nadeSchema = new mongoose.Schema(
     type: {
       type: String,
       enum: {
-        values: ['Smoke', 'Flashbang', 'Molotov', 'Grenade'],
+        values: ['smoke', 'flash', 'molotov', 'hegrenade', 'decoy'],
         message: '{VALUE} is not supported',
       },
       required: true,
     },
-    side: {
+    teamSide: {
       type: String,
       enum: {
-        values: ['CT', 'TT', 'Both'],
+        values: ['counterTerrorist', 'terrorist', 'both'],
         message: '{VALUE} is not supported',
       },
       required: true,
@@ -95,11 +141,11 @@ const nadeSchema = new mongoose.Schema(
       type: String,
       enum: {
         values: [
-          'Stationary',
-          'Running',
-          'Walking',
-          'Crouching',
-          'Crouch walking',
+          'stationary',
+          'running',
+          'walking',
+          'crouching',
+          'crouchwalking',
         ],
         message: '{VALUE} is not supported',
       },
@@ -109,12 +155,12 @@ const nadeSchema = new mongoose.Schema(
       type: String,
       enum: {
         values: [
-          'Jumpthrow',
-          'Mouse Left',
-          'Mouse Right',
-          'Mouse Both',
-          'Jumpthrow + W',
-          'Jumpthrow - Mouse Both',
+          'jumpthrow',
+          'jumpthrowBoth',
+          'jumpthrowW',
+          'left',
+          'right',
+          'both',
         ],
         message: '{VALUE} is not supported',
       },
@@ -123,30 +169,68 @@ const nadeSchema = new mongoose.Schema(
     tickrate: {
       type: String,
       enum: {
-        values: ['64 Tick', '128 Tick', 'Both'],
+        values: ['tick64', 'tick128', 'any', null],
         message: '{VALUE} is not supported',
       },
-      required: true,
+      required: false,
     },
     description: {
       type: [String],
+      required: false,
+    },
+    slug: {
+      type: String,
       required: false,
     },
     tags: {
       type: [String],
       required: false,
     },
-    reviews: [reviewSchema],
-    rating: {
+    isNew: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
+    oneWay: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
+    score: {
       type: Number,
       required: true,
       default: 0,
     },
+    reviews: [reviewSchema],
     numReviews: {
       type: Number,
       required: true,
       default: 0,
     },
+    favoriteCount: {
+      type: Number,
+      required: true,
+      default: 0,
+    },
+    viewCount: {
+      type: Number,
+      required: true,
+      default: 0,
+    },
+    status: {
+      type: String,
+      enum: {
+        values: ['pending', 'accepted', 'rejected'],
+        message: '{VALUE} is not supported',
+      },
+      required: true,
+      default: 'pending',
+    },
+    youTubeId: {
+      type: String,
+      required: false,
+    },
+    gfycat: gfySchema,
   },
   {
     timestamps: true,
@@ -154,5 +238,20 @@ const nadeSchema = new mongoose.Schema(
 );
 
 const Nade = mongoose.model('Nade', nadeSchema);
+
+// Nade.aggregate([
+//   {
+//     $group: {
+//       _id: '$endPosition',
+//       count: { $sum: 1 },
+//     },
+//   },
+// ])
+//   .then((result) => {
+//     console.log(result);
+//   })
+//   .catch((error) => {
+//     console.error(error);
+//   });
 
 export default Nade;

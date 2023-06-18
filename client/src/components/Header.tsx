@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { UserButton } from '@clerk/clerk-react';
 
 const Header = () => {
   return (
@@ -19,14 +20,7 @@ const Header = () => {
           <Link to='/favorites'>Favorites</Link>
         </li>
         <li>
-          <Link to='/profile'>Profile</Link>
-        </li>
-        <li>
-          <Link to='/login'>
-            <a href='/login' role='button'>
-              Login
-            </a>
-          </Link>
+          <UserButton />
         </li>
       </ul>
     </nav>

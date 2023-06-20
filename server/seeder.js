@@ -6,7 +6,7 @@ import users from './data/users.js';
 import mirageSmokes from './data/mirageSmokes.js';
 import User from './models/userModel.js';
 import Nade from './models/nadesModel.js';
-import EndPositionCount from './models/endPositionCount.js';
+import NadesPositions from './models/nadesPositionsModel.js';
 import connectDB from './config/db.js';
 
 dotenv.config();
@@ -53,7 +53,7 @@ const importData = async () => {
           count: item.count,
         }));
 
-        await EndPositionCount.insertMany(aggregatedData);
+        await NadesPositions.insertMany(aggregatedData);
       })
       .then(() => {
         console.log('Aggregated data saved successfully.'.green.inverse);
@@ -76,7 +76,7 @@ const destroyData = async () => {
   try {
     await Nade.deleteMany();
     await User.deleteMany();
-    await EndPositionCount.deleteMany();
+    await NadesPositions.deleteMany();
 
     console.log('Data Destroyed!'.red.inverse);
     process.exit();

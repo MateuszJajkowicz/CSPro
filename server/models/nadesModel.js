@@ -30,7 +30,7 @@ const imageSchema = mongoose.Schema({
     type: String,
     required: true,
   },
-  collection: {
+  stack: {
     type: String,
     required: true,
   },
@@ -186,7 +186,7 @@ const nadeSchema = new mongoose.Schema(
       type: [String],
       required: false,
     },
-    isNew: {
+    new: {
       type: Boolean,
       required: false,
       default: false,

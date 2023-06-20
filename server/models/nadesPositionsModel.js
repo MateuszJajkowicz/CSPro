@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 
-const endPositionCountSchema = new mongoose.Schema({
+const nadesPositionsSchema = new mongoose.Schema({
   endPosition: {
     type: String,
     required: true,
@@ -19,9 +19,9 @@ const endPositionCountSchema = new mongoose.Schema({
   },
 });
 
-const EndPositionCount = mongoose.model(
+const NadesPositions = mongoose.model(
   'EndPositionCount',
-  endPositionCountSchema
+  nadesPositionsSchema
 );
 
-export default EndPositionCount;
+export default NadesPositions;

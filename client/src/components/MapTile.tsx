@@ -6,7 +6,7 @@ const MapTile = ({ name }: { name: string }) => {
       <Link to={`/nades/${name}`}>
         <figure>
           <img
-            src={`/images/${name}.jpg`}
+            src={`/images/thumbnails/${name}.jpg`}
             alt={`${name}`}
             className='tile-img'
           />

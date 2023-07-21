@@ -4,9 +4,10 @@ import colors from 'colors';
 import users from './data/users.js';
 // import nades from './data/nades.js';
 import mirageSmokes from './data/mirageSmokes.js';
+import mirageNadesPositions from './data/mirageNadesPositions.js';
 import User from './models/userModel.js';
-import Nade from './models/nadesModel.js';
-import NadesPositions from './models/nadesPositionsModel.js';
+import Nade from './models/nadeModel.js';
+import NadesCountForPosition from './models/nadesCountForPositionModel.js';
 import connectDB from './config/db.js';
 
 dotenv.config();
@@ -22,16 +23,12 @@ const importData = async () => {
 
     const adminUser = createdUsers[0]._id;
 
-    // const sampleNades = nades.map((nade) => {
-    //   return { ...nade, user: adminUser };
-    // });
-
     const sampleNades = mirageSmokes.map((nade) => {
       return { ...nade, user: adminUser };
     });
 
     await Nade.insertMany(sampleNades);
-    console.log('Data Imported!'.green.inverse);
+    console.log('Nades Imported!'.green.inverse);
 
     await Nade.aggregate([
       {
@@ -44,16 +41,33 @@ const importData = async () => {
           count: { $sum: 1 },
         },
       },
+      {
+        $project: {
+          _id: 0,
+          endPosition: '$_id.endPosition',
+          type: '$_id.type',
+          map: '$_id.map',
+          count: 1,
+        },
+      },
     ])
       .then(async (result) => {
-        const aggregatedData = result.map((item) => ({
-          endPosition: item._id.endPosition,
-          type: item._id.type,
-          map: item._id.map,
-          count: item.count,
-        }));
+        const nadePositions = result;
 
-        await NadesPositions.insertMany(aggregatedData);
+        // Joining the arrays based on the specified conditions
+        const joinedArray = nadePositions
+          .filter((nadePos) => mirageNadesPositions.some((mapPos) => mapPos.map === nadePos.map && mapPos.type === nadePos.type && mapPos.endPosition === nadePos.endPosition))
+          .map((nadePos) => {
+            const mapPos = mirageNadesPositions.find((mapPos) => mapPos.map === nadePos.map && mapPos.type === nadePos.type && mapPos.endPosition === nadePos.endPosition);
+            return {
+              ...nadePos,
+              x: mapPos.x,
+              y: mapPos.y,
+              user: adminUser
+            };
+          });
+
+        await NadesCountForPosition.insertMany(joinedArray);
       })
       .then(() => {
         console.log('Aggregated data saved successfully.'.green.inverse);
@@ -76,7 +90,7 @@ const destroyData = async () => {
   try {
     await Nade.deleteMany();
     await User.deleteMany();
-    await NadesPositions.deleteMany();
+    await NadesCountForPosition.deleteMany();
 
     console.log('Data Destroyed!'.red.inverse);
     process.exit();

@@ -14437,7 +14437,7 @@ const mirageSmokes = [
   {
     numReviews: 0,
     map: 'mirage',
-    endPosition: 'Vav - B Bench',
+    endPosition: 'Van - B Bench',
     favoriteCount: 41,
     game: 'CSGO',
     gfycat: {

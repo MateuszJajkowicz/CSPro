@@ -239,19 +239,4 @@ const nadeSchema = new mongoose.Schema(
 
 const Nade = mongoose.model('Nade', nadeSchema);
 
-// Nade.aggregate([
-//   {
-//     $group: {
-//       _id: '$endPosition',
-//       count: { $sum: 1 },
-//     },
-//   },
-// ])
-//   .then((result) => {
-//     console.log(result);
-//   })
-//   .catch((error) => {
-//     console.error(error);
-//   });
-
 export default Nade;

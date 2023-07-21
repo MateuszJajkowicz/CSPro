@@ -1,11 +1,11 @@
 import asyncHandler from 'express-async-handler';
-import NadesPositions from '../models/nadesPositionsModel.js';
+import NadesCountForPosition from '../models/nadesCountForPositionModel.js';
 
 // @desc    Fetch all nades
 // @route   GET /api/nades
 // @access  Public
-const getNadesPositionsByMap = asyncHandler(async (req, res) => {
-  const nades = await NadesPositions.where('map').equals(req.params.map);
+const getNadesPositionsByMapAndType = asyncHandler(async (req, res) => {
+  const nades = await NadesCountForPosition.where('map').equals(req.params.map).where('type').equals(req.params.nade);
 
   if (nades) {
     res.json(nades);
@@ -14,4 +14,4 @@ const getNadesPositionsByMap = asyncHandler(async (req, res) => {
   }
 });
 
-export { getNadesPositionsByMap };
+export { getNadesPositionsByMapAndType };

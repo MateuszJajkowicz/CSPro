@@ -1,5 +1,5 @@
 import asyncHandler from 'express-async-handler';
-import Nade from '../models/nadesModel.js';
+import Nade from '../models/nadeModel.js';
 
 // @desc    Fetch all nades
 // @route   GET /api/nades

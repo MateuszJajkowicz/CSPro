@@ -1,8 +1,10 @@
 import express from 'express';
-import { getNadesByMap } from '../controllers/nadesController.js';
+import { getNadesByMapNadeTypeAndPosition } from '../controllers/nadesController.js';
 
 const router = express.Router();
 
-router.route('/:map').get(getNadesByMap);
+router
+  .route('/:map/:nadeType/:endPosition')
+  .get(getNadesByMapNadeTypeAndPosition);
 
 export default router;

@@ -5,7 +5,10 @@ import NadesCountForPosition from '../models/nadesCountForPositionModel.js';
 // @route   GET /api/nades
 // @access  Public
 const getNadesPositionsByMapAndType = asyncHandler(async (req, res) => {
-  const nades = await NadesCountForPosition.where('map').equals(req.params.map).where('type').equals(req.params.nade);
+  const nades = await NadesCountForPosition.where('map')
+    .equals(req.params.map)
+    .where('type')
+    .equals(req.params.nadeType);
 
   if (nades) {
     res.json(nades);

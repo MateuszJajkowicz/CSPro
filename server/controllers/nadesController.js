@@ -42,4 +42,22 @@ const getNadesByMap = asyncHandler(async (req, res) => {
   // res.json({ products, page, pages });
 });
 
-export { getNadesByMap };
+// @desc    Fetch nades by map, nadeType and endPosition
+// @route   GET /api/nades
+// @access  Public
+const getNadesByMapNadeTypeAndPosition = asyncHandler(async (req, res) => {
+  const nades = await Nade.where('map')
+    .equals(req.params.map)
+    .where('type')
+    .equals(req.params.nadeType)
+    .where('endPosition')
+    .equals(req.params.endPosition);
+
+  if (nades) {
+    res.json(nades);
+  } else {
+    res.status(404).json({ message: 'Nades not found' });
+  }
+});
+
+export { getNadesByMap, getNadesByMapNadeTypeAndPosition };

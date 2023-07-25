@@ -14,8 +14,9 @@ import { Suspense } from 'react';
 import HomeScreen from './screens/HomeScreen';
 import SmokesScreen from './screens/NadesScreen';
 import Loader from './components/Loader';
-import SmokesMapScreen from './screens/NadesMapScreen';
+import NadesPositionsOnMapScreen from './screens/NadesPositionsOnMapScreen';
 import FavoritesScreen from './screens/FavoritesScreen';
+import NadesByPositionScreen from './screens/NadesByPositionScreen';
 
 if (!import.meta.env.VITE_REACT_APP_CLERK_PUBLISHABLE_KEY) {
   throw new Error('Missing Publishable Key');
@@ -45,7 +46,8 @@ function ClerkProviderWithRoutes() {
               element={<SignUp routing='path' path='/sign-up' />}
             />
             <Route path='/nades' element={<SmokesScreen />} />
-            <Route path='/nades/:map' element={<SmokesMapScreen />} />
+            <Route path='/nades/:map' element={<NadesPositionsOnMapScreen />} />
+            <Route path='/nades/:map/:nadeType/:endPosition' element={<NadesByPositionScreen />} />
             <Route
               path='/favorites'
               element={

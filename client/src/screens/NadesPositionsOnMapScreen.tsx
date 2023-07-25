@@ -1,15 +1,18 @@
 import { useParams } from 'react-router-dom';
-import { useGetNades } from '../hooks/useGetNades';
+import { useGetNadesPositionsByMapAndNadeType } from '../hooks/useGetNades';
 import classes from './styles/NadesMapScreen.module.css';
 import { CSSProperties, useRef, useState } from 'react';
 import SmokeIcon from '../components/SmokeIcon';
+import { Link } from 'react-router-dom';
+import { NadePosition } from '../models/nadePosition.model';
 
 const NadesMapScreen = () => {
   const { map } = useParams()
   const [isSidebarOpen, setSidebarOpen] = useState(false);
   const [nadeType, setNadeType] = useState('smoke');
 
-  const { data } = useGetNades(map, nadeType);
+  const { data } = useGetNadesPositionsByMapAndNadeType(map, nadeType);
+  console.log(data)
 
   const toggleSidebar = () => {
     setSidebarOpen(!isSidebarOpen);
@@ -17,7 +20,7 @@ const NadesMapScreen = () => {
 
   {/* code used for adding new positions */ }
   const imageContainerRef = useRef<HTMLDivElement>(null);
-  const handleClick = (event: any) => {
+  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     // const rect = imageContainerRef.current?.getBoundingClientRect();
     // if (rect) {
     //   const clickedX = (event.clientX - rect.left - 20).toFixed(0) + 'px';
@@ -28,7 +31,7 @@ const NadesMapScreen = () => {
   };
 
   const renderDivs = () => {
-    return data.map((item: any, index: any) => {
+    return data?.map((item: NadePosition, index: number) => {
       let { count, x, y } = item;
       let maxWidth = 40;
       if (window.innerWidth < 400) {
@@ -57,9 +60,9 @@ const NadesMapScreen = () => {
       };
 
       return (
-        <div key={index} className="svgContainer" style={divStyle}>
+        <Link to={`/nades/${map}/${nadeType}/${item.endPosition}`} key={index} className="svgContainer" style={divStyle}>
           <SmokeIcon dynamicNumber={count} />
-        </div>
+        </Link>
       );
     });
   };

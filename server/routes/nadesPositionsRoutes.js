@@ -3,6 +3,6 @@ import { getNadesPositionsByMapAndType } from '../controllers/nadesPositionContr
 
 const router = express.Router();
 
-router.route('/:map/:nade').get(getNadesPositionsByMapAndType);
+router.route('/:map/:nadeType').get(getNadesPositionsByMapAndType);
 
 export default router;

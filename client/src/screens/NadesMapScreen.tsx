@@ -30,16 +30,30 @@ const NadesMapScreen = () => {
   const renderDivs = () => {
     return data.map((item: any, index: any) => {
       let { count, x, y } = item;
-      if (window.innerWidth < 992) x >= 0 ? x -= 10 : x += 10;
+      let maxWidth = 40;
+      if (window.innerWidth < 400) {
+        x = x > 0 ? x * ((window.innerWidth - 32) / 1000) * 2 : x * ((window.innerWidth - 32) / 1000) * 2.1;
+        y = y > 0 ? y * ((window.innerWidth - 32) / 1000) * 2 : y * ((window.innerWidth - 32) / 1000) * 2.15;
+        maxWidth -= 10;
+      } else if (window.innerWidth < 574) {
+        x = x > 0 ? x * ((window.innerWidth - 32) / 1000) * 2.15 : x * ((window.innerWidth - 32) / 1000) * 2.05;
+        y = y > 0 ? y * ((window.innerWidth - 32) / 1000) * 2.15 : y * ((window.innerWidth - 32) / 1000) * 2.05;
+        maxWidth -= 10;
+      } else if (window.innerWidth < 768) {
+        x = x * 0.92;
+        y = y * 0.92;
+        maxWidth -= 5;
+      }
       const divStyle: CSSProperties = {
         position: 'absolute',
         top: '50%',
         left: '50%',
         transform: `translate(${x}%, ${y}%)`,
         width: '100%',
-        maxWidth: '40px',
+        maxWidth: `${maxWidth}px`,
         height: 'auto',
-        opacity: '70%'
+        opacity: '70%',
+        cursor: 'pointer'
       };
 
       return (

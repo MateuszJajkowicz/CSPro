@@ -1,20 +1,28 @@
 .container {
-    display: flex;
-    height: 88vh;
-    position: relative;
+  display: flex;
+  height: 88vh;
+  position: relative;
+  justify-content: space-between;
 }
 
 .mainContent{
-    position: relative;
-    flex: 1 1 auto;  
-    display: flex;
-    align-items: center;
-    justify-content: center; 
+  position: relative;
+  flex: 1 1 auto;  
+  display: flex;
+  align-items: center;
+  justify-content: center; 
 }
 
 .imageContainer{
-    position: relative;
-    height: 100%;
+  width: 638.53px !important;
+  position: relative;
+  height: 100%;
+}
+
+@media ( width > 992px) {
+  .imageContainer{
+    width: 638px;
+  }
 }
 
 .image {
@@ -24,11 +32,11 @@
 }
 
 .sidebar {
-    background: #f2f2f2;
-    padding: 20px;
-    flex: 0 0 auto;
-    position: relative;
-    z-index: 5;
+  background: #f2f2f2;
+  padding: 20px;
+  flex: 0 0 auto;
+  position: relative;
+  z-index: 5;
 }
 
 .openBtn {

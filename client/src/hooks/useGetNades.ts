@@ -15,7 +15,7 @@ export const useGetNadesPositionsByMapAndNadeType = (mapName?: string, nadeType?
 
 export const useGetNadesByMapNadeTypeAndPosition = (mapName?: string, nadeType?: string, endPosition?: string) => {
     return useQuery({
-        queryKey: ['maps', mapName, nadeType],
+        queryKey: ['nades', mapName, nadeType, endPosition],
         queryFn: async () => {
             const { data } = await axios.get(`/api/nades/${mapName}/${nadeType}/${endPosition}`);
             return data as Nade[];
